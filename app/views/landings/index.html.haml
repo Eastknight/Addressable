@@ -1,0 +1,47 @@
+/ Header
+.intro-header
+  .container
+    .row
+      .col-lg-12
+        .intro-message
+          %h1 Addressable
+          %h3 An amazing online address book
+          %hr.intro-divider
+            %ul.list-inline.intro-buttons
+              %li
+                = link_to "Log in", new_user_session_path, class: "btn btn-default btn-lg button-text"
+              %li
+                = link_to "Create Account For Free", new_user_registration_path, class: "btn btn-default btn-lg button-text"
+  / /.container
+/ /.intro-header
+/ Page Content
+.content-section
+  .container
+    .row
+      .col-lg-5.col-sm-6
+        %hr.section-heading-spacer
+          .clearfix
+          %h2.section-heading
+            We Should Keep in Touch
+            %br With Friends
+          %p.lead
+            Addressable is a web application, which will help you orginize contacts and
+            keep in touch with friends! New features will come soon. Try it for free!
+      .col-lg-5.col-lg-offset-2.col-sm-6
+        %h2 Sing up
+        = form_for(:user, url: registration_path(:user)) do |f|
+          .form-group
+            = f.label :email
+            = f.text_field :email, class: "form-control", placeholder: "Enter email"
+          .form-group
+            = f.label :password
+            = f.password_field :password, class: "form-control", placeholder: "Enter password"
+          .form-group
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation, class: "form-control", placeholder: "Enter password again"
+          .form-group
+            = f.submit "Sign up", class: 'btn btn-success'
+          = link_to "Already have an account?", new_session_path(:user)
+
+  / /.container
+/ /.content-section

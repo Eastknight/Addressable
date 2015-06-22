@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Addressable
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+  %body
+    / Navigation
+    %nav.navbar.navbar-default.navbar-fixed-top.topnav{:role => "navigation"}
+      .container.topnav
+        / Brand and toggle get grouped for better mobile display
+        .navbar-header
+          %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to "Addressable", root_path, class: "navbar-brand"
+        / Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          %ul.nav.navbar-nav.navbar-right
+            - if !current_user
+              %li
+                = link_to "Log in", new_user_session_path
+              %li
+                = link_to "Create Account", new_user_registration_path
+            - else
+              %li
+                = link_to "Log out", destroy_user_session_path, method: :delete
+        / /.navbar-collapse
+      / /.container
+    .content-area
+      = yield
