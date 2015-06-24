@@ -1,0 +1,21 @@
+#contacts-page  
+  .container
+    %h1 Contacts List
+    %br 
+    .contacts-listing
+      .row
+        .col-md-4
+          = form_tag contacts_path, :method => 'get', :id => "searchform", :class => "form-inline" do 
+            .form-group
+              %img{src: "https://s3-us-west-1.amazonaws.com/lei-chen-self-production/application/searchicon.png", height: "35", width: "35"}
+              = text_field_tag :search, params[:search], :class => "form-control", :placeholder => "Search by name"
+        .col-md-4
+        .col-md-4
+          %button#add-contact.btn.btn-primary{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"} Add Contact
+          %button#show-friend.btn.btn-primary Show Friends
+      %br
+      .row
+        .col-md-11#lists
+          =render partial: "lists"
+    =render partial: "modal"
+

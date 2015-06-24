@@ -58,4 +58,7 @@ gem 'mini_magick'
 gem 'fog'
 gem 'will_paginate', '~> 3.0.6'
 gem 'haml-rails', '~> 0.9'
+gem 'bootstrap-modal-rails'
+gem "jquery-validation-rails"
+gem 'best_in_place', '~> 3.0.1'
 

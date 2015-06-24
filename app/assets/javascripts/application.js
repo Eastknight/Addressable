@@ -13,4 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
+//= require bootstrap-modal
+//= require bootstrap-modalmanager
+//= require jquery.validate
+//= require jquery.validate.additional-methods
+//= require best_in_place
+//= require jquery.purr
+//= require best_in_place.purr
 //= require_tree .

@@ -1,0 +1,23 @@
+#myModal.modal.fade{:role => "dialog"}
+  .modal-dialog.modal-sm
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", :type => "button"} &times;
+        %h4.modal-title New Contact
+      .modal-body
+        = form_for(:contact, url: contacts_path(:contact), html: {id: "new-contact-form"}) do |f|
+          .form-group
+            = f.label :name
+            = f.text_field :name, class: "form-control", placeholder: "Enter name"
+          .form-group
+            = f.label :email
+            = f.text_field :email, class: "form-control", placeholder: "Enter email"
+          .form-group
+            = f.label :phone
+            = f.text_field :phone, class: "form-control", placeholder: "Enter phone number"
+          .form-group
+            .field
+              = f.check_box :friend
+              = f.label "mark as friend"
+          .form-group
+            = f.submit "Add Contact", class: 'btn btn-success'
