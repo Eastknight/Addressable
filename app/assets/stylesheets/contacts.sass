@@ -7,6 +7,20 @@ $list-height: 40px
   li
     list-style-type: none
     border: 1px solid grey
-    height: $list-height
-    line-height: $list-height
+    height: 40px
+    line-height: 35px
 
+  input[type=checkbox]
+    display: block
+    width: 30px
+    height: 30px
+    background-repeat: no-repeat
+    background-position: center center
+    background-size: contain
+    -webkit-appearance: none
+    outline: 0
+    &:checked
+      background-image: url(https://s3-us-west-1.amazonaws.com/lei-chen-self-production/application/friend.png)
+    &:not(:checked)
+      background-image: url(https://s3-us-west-1.amazonaws.com/lei-chen-self-production/application/unfriend.png)
+      

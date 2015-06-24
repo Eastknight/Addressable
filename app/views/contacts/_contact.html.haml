@@ -7,5 +7,9 @@
       = best_in_place contact, :phone, class: "input-sm"
     .col-md-3
       = best_in_place contact, :email, class: "input-sm"
-    .col-md-3
-      =link_to image_tag("https://s3-us-west-1.amazonaws.com/lei-chen-self-production/application/deleteicon.png", height: "20", width: "20"), contact_path(contact), method: :delete, remote: true
+    .col-md-1
+      = form_for contact, remote: true do |f|
+        = f.check_box :friend, class: "submittable"
+    .col-md-2
+      .delete-icon
+        =link_to image_tag("https://s3-us-west-1.amazonaws.com/lei-chen-self-production/application/deleteicon.png", height: "20", width: "20"), contact_path(contact), method: :delete, remote: true, data: { confirm: 'Are you sure you want to delete this contact?' }

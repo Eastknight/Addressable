@@ -2,13 +2,7 @@ class ContactsController < ApplicationController
   respond_to :json, :html
 
   def index
-    @user = current_user
-    @contacts = @user.contacts
-    if params[:search].present?  
-      search = params[:search]
-      @contacts = @contacts.where('name LIKE ?', "%#{search}%")     
-    end
-    @contacts = @contacts.paginate(:per_page => 10, :page => params[:page])
+    set_contacts
   end
 
   def create
@@ -26,13 +20,7 @@ class ContactsController < ApplicationController
   end
 
   def destroy
-    @user = current_user
-    @contacts = @user.contacts
-    if params[:search].present?  
-      search = params[:search]
-      @contacts = @contacts.where('name LIKE ?', "%#{search}%")     
-    end
-    @contacts = @contacts.paginate(:per_page => 10, :page => params[:page])
+    set_contacts
     @contact = Contact.find(params[:id])
     @contact.destroy
 
@@ -66,6 +54,20 @@ class ContactsController < ApplicationController
   end
 
   private
+
+  def set_contacts
+    @user = current_user
+    @showFriends = params[:showFriends]
+    @contacts = @user.contacts
+    if @showFriends == "true"
+      @contacts = @contacts.where(friend: true)
+    end
+    if params[:search].present?  
+      search = params[:search]
+      @contacts = @contacts.where('name LIKE ?', "%#{search}%")     
+    end
+    @contacts = @contacts.paginate(:per_page => 10, :page => params[:page])    
+  end
 
   def contact_params
     params.require(:contact).permit(:name, :email, :phone, :friend)
