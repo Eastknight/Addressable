@@ -1,4 +1,12 @@
 .container
+  - if flash[:error]
+    .alert.alert-danger
+      %button.close{type: "button", "data-dismiss" => "alert"} &times;
+      = flash[:error]
+  - elsif flash[:alert]
+    .alert.alert-danger
+      %button.close{type: "button", "data-dismiss" => "alert"} &times;
+      = flash[:alert]
   %h2 Log in
   .row
     .col-md-6

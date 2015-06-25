@@ -2,7 +2,10 @@
   %h2 Create Account
   .row
     .col-md-6
-      = form_for(:user, url: registration_path(:user)) do |f|
+      = form_for(:user, url: registration_path(:user), html: {class: "signup-form"}) do |f|
+        - if @user.errors.any?
+          .alert.alert-danger
+            = devise_error_messages!
         .form-group
           = f.label :email
           = f.text_field :email, class: "form-control", placeholder: "Enter email"

@@ -1,9 +1,17 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
   #config best_in_place
   $('.best_in_place').best_in_place()
+  
+  ##Add callbacks to in-line editing errors
+  $('.contact-email').bind 'ajax:error', ->
+    alert("Email is not valid.")
+    return
+  $('.contact-phone').bind 'ajax:error', ->
+    alert("Phone number is not valid. We only support US phone number")
+    return
+  $('.contact-name').bind 'ajax:error', ->
+    alert("Name can't be blank!")
+    return
   
   ##Filter contacts list
   #pagination
@@ -30,11 +38,16 @@ $ ->
     false
 
   #Clinet Side Validation
+  $.validator.addMethod 'customemail', ((value, element) ->
+    /^[^@\s]+@([^@\s]+\.)+[^@\W]+$/.test value
+    ), 'Please enter a valid email address.'
+
   $('#new-contact-form').validate
     rules: 
       "contact[email]":
         required: true
         email: true
+        customemail: true
         remote:
           url: '/contacts/check-email'
       "contact[name]":
@@ -45,6 +58,10 @@ $ ->
         phoneUS: true
         remote:
           url: '/contacts/check-phone'
+    errorPlacement: (label, element) ->
+      label.insertAfter element
+      return
+    wrapper: 'span'
     messages:
       "contact[email]":
         remote: "This email already exists."

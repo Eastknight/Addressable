@@ -29,7 +29,7 @@
             keep in touch with friends! New features will come soon. Try it for free!
       .col-lg-5.col-lg-offset-2.col-sm-6
         %h2 Create Free Account 
-        = form_for(:user, url: registration_path(:user)) do |f|
+        = form_for(:user, url: registration_path(:user), html: {class: "signup-form"}) do |f|
           .form-group
             = f.label :email
             = f.text_field :email, class: "form-control", placeholder: "Enter email"

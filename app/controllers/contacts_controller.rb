@@ -1,4 +1,6 @@
 class ContactsController < ApplicationController
+  before_action :authenticate_user!
+  
   respond_to :json, :html
 
   def index
@@ -10,13 +12,22 @@ class ContactsController < ApplicationController
     @contact = @user.contacts.build(contact_params)
     if @contact.save
       redirect_to contacts_path
+    else
+      #TODO
     end
   end
 
   def update
     @contact = Contact.find(params[:id])
-    @contact.update_attributes(contact_params)
-    respond_with @contact
+    
+    respond_to do |format|
+      if @contact.update_attributes(contact_params)
+        format.json {render :json => true}
+      else
+        format.json  { render :json => "", :status => :unprocessable_entity }
+        format.js  { render :js => "", :status => :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
@@ -43,17 +54,32 @@ class ContactsController < ApplicationController
 
   def check_phone
     phone = params[:contact][:phone]
-    @user = current_user
-
-    record = @user.contacts.where("phone = ?", phone.to_s).first
-    if record.present?
-      render :json => false
-    else
+    normalized_phone = normalize_phone_number(phone.to_s)
+    if normalized_phone.length != 12
       render :json => true
+    else
+      @user = current_user
+      record = @user.contacts.where("phone = ?", normalized_phone).first
+      if record.present?
+        render :json => false
+      else
+        render :json => true
+      end
     end
   end
 
   private
+
+  def normalize_phone_number(number)
+    filtered_number = number.gsub(/[^0-9]/, "")
+    if filtered_number.length == 10
+      return  "+1" + filtered_number
+    elsif filtered_number.length == 11
+      return  "+" + filtered_number
+    else
+      return "not valid"
+    end  
+  end
 
   def set_contacts
     @user = current_user
